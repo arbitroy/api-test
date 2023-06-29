@@ -1,6 +1,5 @@
 
 const express = require("express")
-const cors = require("cors")
 
 
 const main = async ({ port }) => {
@@ -8,7 +7,6 @@ const main = async ({ port }) => {
 
   app.use(express.json())
   app.use(express.urlencoded())
-  app.use(cors())
 
   app.get('/', (_req, res) => res.send('Welcome to the GPT Doctor'))
 
