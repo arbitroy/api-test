@@ -31,6 +31,7 @@ app.get("/json", (req, res) => {
     res.json({"Choo Choo": "Welcome to your Express app 🚅"});
 })
 
+// AT
 app.post('/ussd', async (req, res) => {
     // Read the variables sent via POST from our API
     const {
@@ -40,7 +41,7 @@ app.post('/ussd', async (req, res) => {
     } = req.body;
 
     console.log(`This is ${serviceCode} ${phoneNumber} ${text}`)
-    console.log(`body -> ${req.body}`)
+    console.log(`body -> ${req.body.phoneNumber}`)
 
     // console.log()
     let response = 'works';
