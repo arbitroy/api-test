@@ -125,10 +125,10 @@ app.post('/slade', async (req, res) => {
         "Content-Type": "application/x-www-form-urlencoded",
         Accept: "application/json",
     })
-    console.log("working", mydata)
-    if (memberId && sladeId && mydata !== undefined) {
+    // console.log("working", mydata)
+    if (memberId && sladeId && test !== undefined) {
         const url = `https://provider-edi-api.multitenant.slade360.co.ke/v1/beneficiaries/member_eligibility/?member_number=${memberId}&payer_slade_code=${sladeId}`;
-        console.log(my.access_token)
+        console.log(test.access_token)
         const headers = {
             Accept: "*/*",
             Authorization: `Bearer w8f7OlR0IEB3A0JIS3FTN5zoXrXUkZ`,
