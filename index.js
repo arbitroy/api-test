@@ -18,7 +18,7 @@ app.post('/ussd', (req, res) => {
         text,
     } = req.body;
 
-    let response = '';
+    let response = 'works';
 
     console.log(`This is ${sessionId} ${serviceCode} ${phoneNumber} ${text}`)
 
@@ -26,6 +26,17 @@ app.post('/ussd', (req, res) => {
     res.set('Content-Type: text/plain');
     res.send(response);
 });
+
+app.post('slade' (req, res)=>{
+
+    const {
+        memberId,
+        sladeId,
+    } = req.body;
+
+    console.log()
+
+})
 
 const port = process.env.PORT || 3000;
 
