@@ -7,6 +7,7 @@ app.use(express.json());
 app.use(express.urlencoded())
 app.use(cors())
 
+let test = ""
 async function makeRequest(endpoint, type, payload, headers) {
     // switch between the type of request
     const BASEURL = "https://accounts.multitenant.slade360.co.ke/";
@@ -16,9 +17,13 @@ async function makeRequest(endpoint, type, payload, headers) {
             body: payload,
             headers: headers,
         })
+        .then(data =>{
+            return data.json()
+        })
         .then((d)=>{
             console.log(d)
-            return d
+            test = d
+            return test
         })
     } catch (error) {
         return null
