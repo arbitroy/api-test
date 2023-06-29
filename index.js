@@ -1,5 +1,7 @@
 import express from 'express';
 import cors from 'cors';
+import UssdMenu from 'ussd-builder'
+let menu = new UssdMenu();
 
 const app = express();
 app.use(express.json());
@@ -30,8 +32,7 @@ app.get('/', (req, res) => {
 app.get("/json", (req, res) => {
     res.json({"Choo Choo": "Welcome to your Express app 🚅"});
 })
-const UssdMenu = require('ussd-builder');
-let menu = new UssdMenu();
+
 
 // Define menu states
 menu.startState({
