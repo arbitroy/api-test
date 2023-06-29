@@ -149,7 +149,7 @@ app.post('/ussd', async (req, res) => {
 const BASEURL = "https://accounts.multitenant.slade360.co.ke/";
 const PROVIDERAPIURL = "https://provider-edi-api.multitenant.slade360.co.ke/v1/beneficiaries/member_eligibility/";
 
-async function makeRequest(endpoint, type, payload, headers) {
+async function Request(endpoint, type, payload, headers) {
   try {
     const response = await fetch(BASEURL + endpoint, {
       method: type,
@@ -171,7 +171,7 @@ async function sendToAPI(selectedOption, memberNumber) {
     "grant_type=password&client_id=XdIjJgLQBOt8GCAti5GE9413y5BsR2V2IzybSj5q&client_secret=kC0N0LHwYjvv60QmsWMiPv7J7ZZoSHsb7cdLf9pgsmxInGXcBWj3Gw6KKAU9GRqO6JKpiO4y9pSwybo9SSH3chdq31jYU4V0NEhDIztGfiYgeSOG2NJorWl2ENDG0y8f&username=angelmuttai@gmail.com&password=A1997Gaa!";
 
   try {
-    const token = await makeRequest("oauth2/token/", "POST", string, {
+    const token = await Request("oauth2/token/", "POST", string, {
       "Content-Type": "application/x-www-form-urlencoded",
       Accept: "application/json",
     });
