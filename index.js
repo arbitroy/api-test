@@ -17,14 +17,14 @@ async function makeRequest(endpoint, type, payload, headers) {
             body: payload,
             headers: headers,
         })
-        .then(data =>{
-            return data.json()
-        })
-        .then((d)=>{
-            console.log("data", d)
-            test = d
-            return test
-        })
+            .then(data => {
+                return data.json()
+            })
+            .then((d) => {
+                console.log("data", d)
+                test = d
+                return test
+            })
     } catch (error) {
         return null
     }
@@ -130,18 +130,21 @@ app.post('/slade', async (req, res) => {
     if (memberId && sladeId) {
         try {
             const url = `https://provider-edi-api.multitenant.slade360.co.ke/v1/beneficiaries/member_eligibility/?member_number=${memberId}&payer_slade_code=${sladeId}`;
-        
+
             const headers = {
                 Accept: "*/*",
                 Authorization: `Bearer ${test}`,
                 "Content-Type": "application/json",
             };
-    
+
             fetch(url, { method: "GET", headers })
-                .then((data) => {
-                    console.log("api res",data)
+                .then(data => {
+                    return data.json()
+                })
+                .then((data => {
+                    console.log("api res", data)
                     res.send(200).json(data)
-                })   
+                })
         } catch (error) {
             res.status(400)
         }
