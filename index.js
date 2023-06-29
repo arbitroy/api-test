@@ -121,31 +121,29 @@ app.post('/slade', async (req, res) => {
     const string =
         "grant_type=password&client_id=XdIjJgLQBOt8GCAti5GE9413y5BsR2V2IzybSj5q&client_secret=kC0N0LHwYjvv60QmsWMiPv7J7ZZoSHsb7cdLf9pgsmxInGXcBWj3Gw6KKAU9GRqO6JKpiO4y9pSwybo9SSH3chdq31jYU4V0NEhDIztGfiYgeSOG2NJorWl2ENDG0y8f&username=angelmuttai@gmail.com&password=A1997Gaa!";
 
-    makeRequest("oauth2/token/", "POST", string, {
+    const mydata = makeRequest("oauth2/token/", "POST", string, {
         "Content-Type": "application/x-www-form-urlencoded",
         Accept: "application/json",
     })
-        .then((d) => {
-            console.log(d)
-            if (memberId && sladeId && d !== undefined) {
-                const url = `https://provider-edi-api.multitenant.slade360.co.ke/v1/beneficiaries/member_eligibility/?member_number=${memberId}&payer_slade_code=${sladeId}`;
-                console.log(d.access_token)
-                const headers = {
-                    Accept: "*/*",
-                    Authorization: `Bearer ${d.access_token}`,
-                    "Content-Type": "application/json",
-                };
+    console.log("working", mydata)
+    if (memberId && sladeId && mydata !== undefined) {
+        const url = `https://provider-edi-api.multitenant.slade360.co.ke/v1/beneficiaries/member_eligibility/?member_number=${memberId}&payer_slade_code=${sladeId}`;
+        console.log(d.access_token)
+        const headers = {
+            Accept: "*/*",
+            Authorization: `Bearer ${mydata.access_token}`,
+            "Content-Type": "application/json",
+        };
 
-                fetch(url, { method: "GET", headers })
-                    .then((data) => {
-                        console.log(data)
-                        res.json(data)
-                    })
-            } else {
-                res.status(400)
-                res.json("Failed, missing params")
-            }
-        })
+        fetch(url, { method: "GET", headers })
+            .then((data) => {
+                console.log(data)
+                res.json(data)
+            })
+    } else {
+        res.status(400)
+        res.json("Failed, missing params")
+    }
 
 })
 
