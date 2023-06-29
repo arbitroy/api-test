@@ -138,7 +138,7 @@ app.post('/slade', async (req, res) => {
 
         fetch(url, { method: "GET", headers })
             .then((data) => {
-                console.log(data)
+                console.log("api res",data)
                 res.json(data)
             })
     } else {
