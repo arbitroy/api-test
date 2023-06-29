@@ -9,7 +9,7 @@ app.get("/json", (req, res) => {
     res.json({"Choo Choo": "Welcome to your Express app 🚅"});
 })
 
-app.post('/ussd', (req, res) => {
+app.post('/ussd', async (req, res) => {
     // Read the variables sent via POST from our API
     const {
         sessionId,
@@ -17,6 +17,7 @@ app.post('/ussd', (req, res) => {
         phoneNumber,
         text,
     } = req.body;
+
     console.log(`This is ${sessionId} ${serviceCode} ${phoneNumber} ${text}`)
 
     // console.log()
