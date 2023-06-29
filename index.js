@@ -124,11 +124,8 @@ app.post('/slade', async (req, res) => {
               };
     
             fetch(url, {method:"GET", headers })
-            .then((resppp)=>{
-                return resppp.json();
-            })
             .then((data)=>{
-                res(data)
+                res.json(data)
             })
         }else{
             res.status(400)
