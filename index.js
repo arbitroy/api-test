@@ -39,12 +39,16 @@ app.post('/ussd', async (req, res) => {
         phoneNumber,
         text,
     } = req.body;
+    let response = 'works';
 
     console.log(`This is ${serviceCode} ${phoneNumber} ${text}`)
     console.log(`body -> ${req.body.phoneNumber}`)
-
+    if (text === ""){
+        response = 'CON we are in !'
+    }else if(text === "1"){
+        response = 'CON were also in'
+    }
     // console.log()
-    let response = 'works';
     // console.log(`This is ${sessionId} ${serviceCode} ${phoneNumber} ${text}`)
     // Send the response back to the API
     res.set('Content-Type: text/plain');
