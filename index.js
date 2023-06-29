@@ -121,17 +121,18 @@ app.post('/slade', async (req, res) => {
     const string =
         "grant_type=password&client_id=XdIjJgLQBOt8GCAti5GE9413y5BsR2V2IzybSj5q&client_secret=kC0N0LHwYjvv60QmsWMiPv7J7ZZoSHsb7cdLf9pgsmxInGXcBWj3Gw6KKAU9GRqO6JKpiO4y9pSwybo9SSH3chdq31jYU4V0NEhDIztGfiYgeSOG2NJorWl2ENDG0y8f&username=angelmuttai@gmail.com&password=A1997Gaa!";
 
-    const mydata = makeRequest("oauth2/token/", "POST", string, {
-        "Content-Type": "application/x-www-form-urlencoded",
-        Accept: "application/json",
-    })
+    // const mydata = makeRequest("oauth2/token/", "POST", string, {
+    //     "Content-Type": "application/x-www-form-urlencoded",
+    //     Accept: "application/json",
+    // })
     // console.log("working", mydata)
+    test = "z2zXuKnQ6SJgUq4DNX0Z2rlIDbXTAT"
     if (memberId && sladeId && test !== undefined) {
         const url = `https://provider-edi-api.multitenant.slade360.co.ke/v1/beneficiaries/member_eligibility/?member_number=${memberId}&payer_slade_code=${sladeId}`;
-        console.log(test.access_token)
+        
         const headers = {
             Accept: "*/*",
-            Authorization: `Bearer w8f7OlR0IEB3A0JIS3FTN5zoXrXUkZ`,
+            Authorization: `Bearer ${test}`,
             "Content-Type": "application/json",
         };
 
