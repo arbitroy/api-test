@@ -11,13 +11,11 @@ async function makeRequest(endpoint, type, payload, headers) {
     // switch between the type of request
     const BASEURL = "https://accounts.multitenant.slade360.co.ke/";
 
-    respo = await fetch(BASEURL + endpoint, {
+    return await fetch(BASEURL + endpoint, {
         method: type,
         body: payload,
         headers: headers,
     })
-
-    return respo
 }
 
 app.get('/', (req, res) => {
