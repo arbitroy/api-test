@@ -227,7 +227,7 @@ app.post('/slade', async (req, res) => {
             const data = await axios.get(url, headers)
              .then((response)=>{
                 console.log(response)
-                return response
+                response
              })
 
              res.status(200).json(data)
