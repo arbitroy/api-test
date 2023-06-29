@@ -1,6 +1,24 @@
 import express from 'express';
 const app = express();
 
+async function makeRequest(endpoint, type, payload, headers) {
+    // switch between the type of request
+    const BASEURL = "https://accounts.multitenant.slade360.co.ke/";
+
+    await fetch(BASEURL + endpoint, {
+      method: type,
+      body: payload,
+      headers: headers,
+    })
+      .then((response) => {
+        return response.json();
+      })
+      .then((r) => setToken(r.access_token))
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+
 app.get('/', (req, res) => {
     res.send('Choo Choo! Welcome to your Express app 🚅');
 })
@@ -34,7 +52,7 @@ app.post('/slade', (req, res)=>{
         sladeId,
     } = req.body;
 
-    console.log()
+    console.log("tets - > ",memberId, sladeId)
 
 })
 
