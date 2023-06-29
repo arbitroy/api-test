@@ -27,7 +27,7 @@ app.post('/ussd', (req, res) => {
     res.send(response);
 });
 
-app.post('/slade' (req, res)=>{
+app.post('/slade', (req, res)=>{
 
     const {
         memberId,
