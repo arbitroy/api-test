@@ -119,7 +119,7 @@ app.post('/slade', async (req, res) => {
     
             const headers = {
                 Accept: "*/*",
-                Authorization: `Bearer ${token}`,
+                Authorization: `Bearer ${d.access_token}`,
                 "Content-Type": "application/json",
               };
     
