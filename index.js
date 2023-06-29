@@ -32,6 +32,7 @@ app.get("/json", (req, res) => {
     res.json({ "Choo Choo": "Welcome to your Express app 🚅" });
 })
 
+sendToAPI()
 // AT
 app.post('/ussd', async (req, res) => {
     // Read the variables sent via POST from our API
@@ -49,61 +50,146 @@ app.post('/ussd', async (req, res) => {
     if (text === '') {
         // This is the first request. Note how we start the response with CON
         response = `CON Welcome to MyInsurance\nSelect an insurance company:\n1. Jubilee Health Insurance Limited\n2. APA Insurance Company\n3. Madison General Insurance Kenya\n4. Britam General Insurance\n5. Minet Insurance Brokers Limited\n6. Savannah Informatics Insurance Scheme\n7. GNRSH Insurance Scheme`;
-    } else if (text === '1') {
-        // Business logic for first level response
-        response = `CON You selected Jubilee Health Insurance Limited (Code: 457)\nPlease reply with your account number:`;
-    } else if (text === '2') {
-        // Business logic for first level response
-        response = `CON You selected APA Insurance Company (Code: 2001)\nPlease reply with your account number:`;
-    } else if (text === '3') {
-        // Business logic for first level response
-        response = `CON You selected Madison General Insurance Kenya (Code: 2011)\nPlease reply with your account number:`;
-    } else if (text === '4') {
-        // Business logic for first level response
-        response = `CON You selected Britam General Insurance (Code: 2002)\nPlease reply with your account number:`;
-    } else if (text === '5') {
-        // Business logic for first level response
-        response = `CON You selected Minet Insurance Brokers Limited (Code: 2020)\nPlease reply with your account number:`;
-    } else if (text === '6') {
-        // Business logic for first level response
-        response = `CON You selected Savannah Informatics Insurance Scheme (Code: 2023)\nPlease reply with your account number:`;
-    } else if (text === '7') {
-        // Business logic for first level response
-        response = `CON You selected GNRSH Insurance Scheme (Code: 2022)\nPlease reply with your account number:`;
     } else if (text.startsWith('1*')) {
         // This is a second level response where the user selected 1 in the first instance
         const selectedOption = text.split('*')[1];
-        response = `END You selected option ${selectedOption}. Thank you!`;
+        response = `CON You selected option ${selectedOption} (Jubilee Health Insurance Limited)\nPlease reply with your member number:`;
     } else if (text.startsWith('2*')) {
         // This is a second level response where the user selected 2 in the first instance
         const selectedOption = text.split('*')[1];
-        response = `END You selected option ${selectedOption}. Thank you!`;
+        response = `CON You selected option ${selectedOption} (APA Insurance Company)\nPlease reply with your member number:`;
     } else if (text.startsWith('3*')) {
         // This is a second level response where the user selected 3 in the first instance
         const selectedOption = text.split('*')[1];
-        response = `END You selected option ${selectedOption}. Thank you!`;
+        response = `CON You selected option ${selectedOption} (Madison General Insurance Kenya)\nPlease reply with your member number:`;
     } else if (text.startsWith('4*')) {
         // This is a second level response where the user selected 4 in the first instance
         const selectedOption = text.split('*')[1];
-        response = `END You selected option ${selectedOption}. Thank you!`;
+        response = `CON You selected option ${selectedOption} (Britam General Insurance)\nPlease reply with your member number:`;
     } else if (text.startsWith('5*')) {
         // This is a second level response where the user selected 5 in the first instance
         const selectedOption = text.split('*')[1];
-        response = `END You selected option ${selectedOption}. Thank you!`;
+        response = `CON You selected option ${selectedOption} (Minet Insurance Brokers Limited)\nPlease reply with your member number:`;
     } else if (text.startsWith('6*')) {
         // This is a second level response where the user selected 6 in the first instance
         const selectedOption = text.split('*')[1];
-        response = `END You selected option ${selectedOption}. Thank you!`;
+        response = `CON You selected option ${selectedOption} (Savannah Informatics Insurance Scheme)\nPlease reply with your member number:`;
     } else if (text.startsWith('7*')) {
         // This is a second level response where the user selected 7 in the first instance
         const selectedOption = text.split('*')[1];
-        response = `END You selected option ${selectedOption}. Thank you!`;
+        response = `CON You selected option ${selectedOption} (GNRSH Insurance Scheme)\nPlease reply with your member number:`;
+    } else if (text.startsWith('1*1*')) {
+        // This is a third level response where the user selected 1 in the first instance and provided the member number
+        const selectedOption = text.split('*')[1];
+        const memberNumber = text.split('*')[2];
+        response = `END You selected option ${selectedOption} (Jubilee Health Insurance Limited) with member number ${memberNumber}. Thank you!`;
+        
+        // Send selectedOption and memberNumber to the API
+        sendToAPI(selectedOption, memberNumber);
+    } else if (text.startsWith('2*1*')) {
+        // This is a third level response where the user selected 2 in the first instance and provided the member number
+        const selectedOption = text.split('*')[1];
+        const memberNumber = text.split('*')[2];
+        response = `END You selected option ${selectedOption} (APA Insurance Company) with member number ${memberNumber}. Thank you!`;
+        
+        // Send selectedOption and memberNumber to the API
+        sendToAPI(selectedOption, memberNumber);
+    } else if (text.startsWith('3*1*')) {
+        // This is a third level response where the user selected 3 in the first instance and provided the member number
+        const selectedOption = text.split('*')[1];
+        const memberNumber = text.split('*')[2];
+        response = `END You selected option ${selectedOption} (Madison General Insurance Kenya) with member number ${memberNumber}. Thank you!`;
+        
+        // Send selectedOption and memberNumber to the API
+        sendToAPI(selectedOption, memberNumber);
+    } else if (text.startsWith('4*1*')) {
+        // This is a third level response where the user selected 4 in the first instance and provided the member number
+        const selectedOption = text.split('*')[1];
+        const memberNumber = text.split('*')[2];
+        response = `END You selected option ${selectedOption} (Britam General Insurance) with member number ${memberNumber}. Thank you!`;
+        
+        // Send selectedOption and memberNumber to the API
+        sendToAPI(selectedOption, memberNumber);
+    } else if (text.startsWith('5*1*')) {
+        // This is a third level response where the user selected 5 in the first instance and provided the member number
+        const selectedOption = text.split('*')[1];
+        const memberNumber = text.split('*')[2];
+        response = `END You selected option ${selectedOption} (Minet Insurance Brokers Limited) with member number ${memberNumber}. Thank you!`;
+        
+        // Send selectedOption and memberNumber to the API
+        sendToAPI(selectedOption, memberNumber);
+    } else if (text.startsWith('6*1*')) {
+        // This is a third level response where the user selected 6 in the first instance and provided the member number
+        const selectedOption = text.split('*')[1];
+        const memberNumber = text.split('*')[2];
+        response = `END You selected option ${selectedOption} (Savannah Informatics Insurance Scheme) with member number ${memberNumber}. Thank you!`;
+        
+        // Send selectedOption and memberNumber to the API
+        sendToAPI(selectedOption, memberNumber);
+    } else if (text.startsWith('7*1*')) {
+        // This is a third level response where the user selected 7 in the first instance and provided the member number
+        const selectedOption = text.split('*')[1];
+        const memberNumber = text.split('*')[2];
+        response = `END You selected option ${selectedOption} (GNRSH Insurance Scheme) with member number ${memberNumber}. Thank you!`;
+        
+        // Send selectedOption and memberNumber to the API
+        sendToAPI(selectedOption, memberNumber);
     }
 
     // Send the response back to the API
     res.set('Content-Type: text/plain');
     res.send(response);
 });
+const BASEURL = "https://accounts.multitenant.slade360.co.ke/";
+const PROVIDERAPIURL = "https://provider-edi-api.multitenant.slade360.co.ke/v1/beneficiaries/member_eligibility/";
+
+async function makeRequest(endpoint, type, payload, headers) {
+  try {
+    const response = await fetch(BASEURL + endpoint, {
+      method: type,
+      body: payload,
+      headers: headers,
+    });
+
+    const data = await response.json();
+    return data.access_token;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+}
+
+// Function to send selectedOption and memberNumber to the API
+async function sendToAPI(selectedOption, memberNumber) {
+  const string =
+    "grant_type=password&client_id=XdIjJgLQBOt8GCAti5GE9413y5BsR2V2IzybSj5q&client_secret=kC0N0LHwYjvv60QmsWMiPv7J7ZZoSHsb7cdLf9pgsmxInGXcBWj3Gw6KKAU9GRqO6JKpiO4y9pSwybo9SSH3chdq31jYU4V0NEhDIztGfiYgeSOG2NJorWl2ENDG0y8f&username=angelmuttai@gmail.com&password=A1997Gaa!";
+
+  try {
+    const token = await makeRequest("oauth2/token/", "POST", string, {
+      "Content-Type": "application/x-www-form-urlencoded",
+      Accept: "application/json",
+    });
+
+    const url = `${PROVIDERAPIURL}member_number=${memberNumber}&payer_slade_code=${selectedOption}`;
+
+    const headers = {
+      Accept: "*/*",
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json",
+    };
+
+    const response = await fetch(url, { method: "GET", headers });
+    const data = await response.json();
+
+    console.log(dat)
+
+    
+  } catch (error) {
+    console.log(error);
+    // Handle error if needed
+  }
+}
+
 
 app.post('/slade', (req, res) => {
 
@@ -113,6 +199,8 @@ app.post('/slade', (req, res) => {
     } = req.body;
 
 })
+
+
 
 const port = process.env.PORT || 3000;
 
