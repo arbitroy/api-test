@@ -140,7 +140,7 @@ app.post('/slade', async (req, res) => {
             fetch(url, { method: "GET", headers })
                 .then((data) => {
                     console.log("api res",data)
-                    res.json(data)
+                    res.send.json(data)
                 })   
         } catch (error) {
             res.status(400)
