@@ -128,19 +128,23 @@ app.post('/slade', async (req, res) => {
     // console.log("working", mydata)
     test = "z2zXuKnQ6SJgUq4DNX0Z2rlIDbXTAT"
     if (memberId && sladeId) {
-        const url = `https://provider-edi-api.multitenant.slade360.co.ke/v1/beneficiaries/member_eligibility/?member_number=${memberId}&payer_slade_code=${sladeId}`;
+        try {
+            const url = `https://provider-edi-api.multitenant.slade360.co.ke/v1/beneficiaries/member_eligibility/?member_number=${memberId}&payer_slade_code=${sladeId}`;
         
-        const headers = {
-            Accept: "*/*",
-            Authorization: `Bearer ${test}`,
-            "Content-Type": "application/json",
-        };
-
-        fetch(url, { method: "GET", headers })
-            .then((data) => {
-                console.log("api res",data)
-                res.json(data)
-            })
+            const headers = {
+                Accept: "*/*",
+                Authorization: `Bearer ${test}`,
+                "Content-Type": "application/json",
+            };
+    
+            fetch(url, { method: "GET", headers })
+                .then((data) => {
+                    console.log("api res",data)
+                    res.json(data)
+                })   
+        } catch (error) {
+            res.status(400)
+        }
     } else {
         res.status(400)
         res.json("Failed, missing params")
