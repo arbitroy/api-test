@@ -21,7 +21,7 @@ async function makeRequest(endpoint, type, payload, headers) {
             return data.json()
         })
         .then((d)=>{
-            console.log(d)
+            console.log("data", d)
             test = d
             return test
         })
