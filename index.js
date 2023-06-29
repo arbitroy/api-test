@@ -147,55 +147,55 @@ app.post('/ussd', async (req, res) => {
     res.set('Content-Type: text/plain');
     res.send(response);
 });
-const BASEURL1 = "https://accounts.multitenant.slade360.co.ke/";
-const PROVIDERAPIURL = "https://provider-edi-api.multitenant.slade360.co.ke/v1/beneficiaries/member_eligibility/";
+// const BASEURL1 = "https://accounts.multitenant.slade360.co.ke/";
+// const PROVIDERAPIURL = "https://provider-edi-api.multitenant.slade360.co.ke/v1/beneficiaries/member_eligibility/";
 
-async function Request(endpoint, type, payload, headers) {
-  try {
-    const response = await fetch(BASEURL1 + endpoint, {
-      method: type,
-      body: payload,
-      headers: headers,
-    });
+// async function Request(endpoint, type, payload, headers) {
+//   try {
+//     const response = await fetch(BASEURL1 + endpoint, {
+//       method: type,
+//       body: payload,
+//       headers: headers,
+//     });
 
-    const data = await response.json();
-    return data.access_token;
-  } catch (error) {
-    console.log(error);
-    throw error;
-  }
-}
+//     const data = await response.json();
+//     return data.access_token;
+//   } catch (error) {
+//     console.log(error);
+//     throw error;
+//   }
+// }
 
-// Function to send selectedOption and memberNumber to the API
-async function sendToAPI(selectedOption, memberNumber) {
-  const string =
-    "grant_type=password&client_id=XdIjJgLQBOt8GCAti5GE9413y5BsR2V2IzybSj5q&client_secret=kC0N0LHwYjvv60QmsWMiPv7J7ZZoSHsb7cdLf9pgsmxInGXcBWj3Gw6KKAU9GRqO6JKpiO4y9pSwybo9SSH3chdq31jYU4V0NEhDIztGfiYgeSOG2NJorWl2ENDG0y8f&username=angelmuttai@gmail.com&password=A1997Gaa!";
+// // Function to send selectedOption and memberNumber to the API
+// async function sendToAPI(selectedOption, memberNumber) {
+//   const string =
+//     "grant_type=password&client_id=XdIjJgLQBOt8GCAti5GE9413y5BsR2V2IzybSj5q&client_secret=kC0N0LHwYjvv60QmsWMiPv7J7ZZoSHsb7cdLf9pgsmxInGXcBWj3Gw6KKAU9GRqO6JKpiO4y9pSwybo9SSH3chdq31jYU4V0NEhDIztGfiYgeSOG2NJorWl2ENDG0y8f&username=angelmuttai@gmail.com&password=A1997Gaa!";
 
-  try {
-    const token = await Request("oauth2/token/", "POST", string, {
-      "Content-Type": "application/x-www-form-urlencoded",
-      Accept: "application/json",
-    });
+//   try {
+//     const token = await Request("oauth2/token/", "POST", string, {
+//       "Content-Type": "application/x-www-form-urlencoded",
+//       Accept: "application/json",
+//     });
 
-    const url = `${PROVIDERAPIURL}member_number=${memberNumber}&payer_slade_code=${selectedOption}`;
+//     const url = `${PROVIDERAPIURL}member_number=${memberNumber}&payer_slade_code=${selectedOption}`;
 
-    const headers = {
-      Accept: "*/*",
-      Authorization: `Bearer ${token}`,
-      "Content-Type": "application/json",
-    };
+//     const headers = {
+//       Accept: "*/*",
+//       Authorization: `Bearer ${token}`,
+//       "Content-Type": "application/json",
+//     };
 
-    const response = await fetch(url, { method: "GET", headers });
-    const data = await response.json();
+//     const response = await fetch(url, { method: "GET", headers });
+//     const data = await response.json();
 
-    console.log(data)
+//     console.log(data)
 
     
-  } catch (error) {
-    console.log(error);
-    // Handle error if needed
-  }
-}
+//   } catch (error) {
+//     console.log(error);
+//     // Handle error if needed
+//   }
+// }
 
 
 app.post('/slade', async (req, res) => {
