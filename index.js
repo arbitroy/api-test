@@ -11,12 +11,15 @@ async function makeRequest(endpoint, type, payload, headers) {
     // switch between the type of request
     const BASEURL = "https://accounts.multitenant.slade360.co.ke/";
     try {
-        d = await fetch(BASEURL + endpoint, {
+        await fetch(BASEURL + endpoint, {
             method: type,
             body: payload,
             headers: headers,
         })
-    return d
+        .then((d)=>{
+            console.log(d)
+            return d
+        })
     } catch (error) {
         return null
     }
@@ -113,7 +116,7 @@ app.post('/slade', async (req, res) => {
     const string =
         "grant_type=password&client_id=XdIjJgLQBOt8GCAti5GE9413y5BsR2V2IzybSj5q&client_secret=kC0N0LHwYjvv60QmsWMiPv7J7ZZoSHsb7cdLf9pgsmxInGXcBWj3Gw6KKAU9GRqO6JKpiO4y9pSwybo9SSH3chdq31jYU4V0NEhDIztGfiYgeSOG2NJorWl2ENDG0y8f&username=angelmuttai@gmail.com&password=A1997Gaa!";
 
-    await makeRequest("oauth2/token/", "POST", string, {
+    makeRequest("oauth2/token/", "POST", string, {
         "Content-Type": "application/x-www-form-urlencoded",
         Accept: "application/json",
     })
