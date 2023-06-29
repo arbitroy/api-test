@@ -1,30 +1,14 @@
 import express from 'express';
 import cors from 'cors';
-const catchAsync = require("../utils/catchAsync");
-const axios = require("axios")
+import catchAsync from './catchAsync';
+import axios from "axios";
 
 const app = express();
 app.use(express.json());
 app.use(express.urlencoded())
 app.use(cors())
 
-async function makeRequest(endpoint, type, payload, headers) {
-    // switch between the type of request
-    const BASEURL = "https://accounts.multitenant.slade360.co.ke/";
 
-    await fetch(BASEURL + endpoint, {
-        method: type,
-        body: payload,
-        headers: headers,
-    })
-        .then((response) => {
-            return response.json();
-        })
-        .then((r) => setToken(r.access_token))
-        .catch((error) => {
-            console.log(error);
-        });
-}
 
 app.get('/', (req, res) => {
     res.send('Choo Choo! Welcome to your Express app 🚅');
