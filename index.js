@@ -11,17 +11,15 @@ app.get("/json", (req, res) => {
 
 app.post('/ussd', (req, res) => {
     // Read the variables sent via POST from our API
-    const {
-        sessionId,
-        serviceCode,
-        phoneNumber,
-        text,
-    } = req.body;
-
+    // const {
+    //     sessionId,
+    //     serviceCode,
+    //     phoneNumber,
+    //     text,
+    // } = req.body;
+    console.log(req.body)
     let response = 'works';
-
-    console.log(`This is ${sessionId} ${serviceCode} ${phoneNumber} ${text}`)
-
+    // console.log(`This is ${sessionId} ${serviceCode} ${phoneNumber} ${text}`)
     // Send the response back to the API
     res.set('Content-Type: text/plain');
     res.send(response);
