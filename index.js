@@ -223,6 +223,7 @@ app.post('/slade', async (req, res) => {
                 "Content-Type": "application/json",
             };
 
+            console.log("someytheon")
             const data = await axios.get(url, headers)
              .then((response)=>{
                 console.log(response)
