@@ -17,7 +17,7 @@ app.post('/ussd', (req, res) => {
     //     phoneNumber,
     //     text,
     // } = req.body;
-    console.log(req.body)
+    console.log(req)
     let response = 'works';
     // console.log(`This is ${sessionId} ${serviceCode} ${phoneNumber} ${text}`)
     // Send the response back to the API
