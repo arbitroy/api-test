@@ -223,7 +223,7 @@ app.post('/slade', async (req, res) => {
                 "Content-Type": "application/json",
             };
 
-            fetch(url, { method: "GET", headers })
+            await fetch(url, { method: "GET", headers })
                 .then(data => {
                     console.log("api res", data)
                     res.send(data)
