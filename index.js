@@ -40,6 +40,7 @@ app.post('/ussd', async (req, res) => {
     } = req.body;
 
     console.log(`This is ${serviceCode} ${phoneNumber} ${text}`)
+    console.log(`body -> ${req.body}`)
 
     // console.log()
     let response = 'works';
