@@ -1,6 +1,7 @@
 import express from 'express';
 import cors from 'cors';
 import fetch from 'node-fetch';
+import axios from 'axios';
 
 const app = express();
 app.use(express.json());
@@ -187,7 +188,7 @@ async function sendToAPI(selectedOption, memberNumber) {
     const response = await fetch(url, { method: "GET", headers });
     const data = await response.json();
 
-    console.log(dat)
+    console.log(data)
 
     
   } catch (error) {
@@ -223,11 +224,19 @@ app.post('/slade', async (req, res) => {
                 "Content-Type": "application/json",
             };
 
-            await fetch(url, { method: "GET", headers })
-                .then(data => {
-                    console.log("api res", data)
-                    res.send(data)
-                })
+            const data = await axios.get(url, headers)
+             .then((response)=>{
+                console.log(response)
+                return response
+             })
+
+             res.status(200).json(data)
+
+            // await fetch(url, { method: "GET", headers })
+            //     .then(data => {
+            //         console.log("api res", data)
+            //         res.send(data)
+            //     })
         } catch (error) {
             res.status(400)
         }
