@@ -10,18 +10,13 @@ async function makeRequest(endpoint, type, payload, headers) {
     // switch between the type of request
     const BASEURL = "https://accounts.multitenant.slade360.co.ke/";
 
-    await fetch(BASEURL + endpoint, {
+    respo = await fetch(BASEURL + endpoint, {
         method: type,
         body: payload,
         headers: headers,
     })
-        .then((response) => {
-            return response.json();
-        })
-        .then((r) => setToken(r.access_token))
-        .catch((error) => {
-            console.log(error);
-        });
+
+    return respo
 }
 
 app.get('/', (req, res) => {
@@ -71,12 +66,42 @@ app.post('/ussd', async (req, res) => {
     res.send(response);
 });
 
-app.post('/slade', (req, res) => {
+app.post('/slade', async (req, res) => {
 
     const {
         memberId,
         sladeId,
     } = req.body;
+    
+    const string =
+    "grant_type=password&client_id=XdIjJgLQBOt8GCAti5GE9413y5BsR2V2IzybSj5q&client_secret=kC0N0LHwYjvv60QmsWMiPv7J7ZZoSHsb7cdLf9pgsmxInGXcBWj3Gw6KKAU9GRqO6JKpiO4y9pSwybo9SSH3chdq31jYU4V0NEhDIztGfiYgeSOG2NJorWl2ENDG0y8f&username=angelmuttai@gmail.com&password=A1997Gaa!";
+
+    d = await makeRequest("oauth2/token/", "POST", string, {
+        "Content-Type": "application/x-www-form-urlencoded",
+        Accept: "application/json",
+    });    
+
+    if(memberId && sladeId && d ){
+
+        const url = `https://provider-edi-api.multitenant.slade360.co.ke/v1/beneficiaries/member_eligibility/?member_number=${memberId}&payer_slade_code=${sladeId}`;
+
+        const headers = {
+            Accept: "*/*",
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          };
+
+        fetch(url, {method:"GET", headers })
+        .then((resppp)=>{
+            return resppp.json();
+        })
+        .then((data)=>{
+            res(data)
+        })
+    }else{
+        res.status(400)
+        res.json("Failed, missing params")
+    }
 
 })
 
