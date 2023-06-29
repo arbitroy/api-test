@@ -10,31 +10,33 @@ async function makeRequest(endpoint, type, payload, headers) {
     const BASEURL = "https://accounts.multitenant.slade360.co.ke/";
 
     await fetch(BASEURL + endpoint, {
-      method: type,
-      body: payload,
-      headers: headers,
+        method: type,
+        body: payload,
+        headers: headers,
     })
-      .then((response) => {
-        return response.json();
-      })
-      .then((r) => setToken(r.access_token))
-      .catch((error) => {
-        console.log(error);
-      });
-  }
+        .then((response) => {
+            return response.json();
+        })
+        .then((r) => setToken(r.access_token))
+        .catch((error) => {
+            console.log(error);
+        });
+}
 
 app.get('/', (req, res) => {
     res.send('Choo Choo! Welcome to your Express app 🚅');
 })
 
 app.get("/json", (req, res) => {
-    res.json({"Choo Choo": "Welcome to your Express app 🚅"});
+    res.json({ "Choo Choo": "Welcome to your Express app 🚅" });
 })
 
 // AT
 app.post('/ussd', async (req, res) => {
     // Read the variables sent via POST from our API
+
     const {
+        sessionId,
         serviceCode,
         phoneNumber,
         text,
@@ -42,29 +44,37 @@ app.post('/ussd', async (req, res) => {
 
     let response = '';
 
-    console.log(`This is ${serviceCode} ${phoneNumber} ${text}`)
-    console.log(`body -> ${req.body[0]}`)
-    
-    if (text === ""){
-        response = 'CON we are in !'
-    }else if(text === "1"){
-        response = 'CON were also in'
+    if (text == '') {
+        // This is the first request. Note how we start the response with CON
+        response = `CON What would you like to check
+            1. My account
+            2. My phone number`;
+    } else if (text == '1') {
+        // Business logic for first level response
+        response = `CON Choose account information you want to view
+            1. Account number`;
+    } else if (text == '2') {
+        // Business logic for first level response
+        // This is a terminal request. Note how we start the response with END
+        response = `END Your phone number is ${phoneNumber}`;
+    } else if (text == '1*1') {
+        // This is a second level response where the user selected 1 in the first instance
+        const accountNumber = 'ACC100101';
+        // This is a terminal request. Note how we start the response with END
+        response = `END Your account number is ${accountNumber}`;
     }
-    // console.log()
-    // console.log(`This is ${sessionId} ${serviceCode} ${phoneNumber} ${text}`)
+
     // Send the response back to the API
     res.set('Content-Type: text/plain');
     res.send(response);
 });
 
-app.post('/slade', (req, res)=>{
+app.post('/slade', (req, res) => {
 
     const {
         memberId,
         sladeId,
     } = req.body;
-
-    consol
 
 })
 
