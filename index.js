@@ -3,6 +3,7 @@ import cors from 'cors';
 
 const app = express();
 app.use(express.json());
+app.use(express.urlencoded())
 app.use(cors())
 
 async function makeRequest(endpoint, type, payload, headers) {
@@ -48,13 +49,12 @@ app.post('/ussd', async (req, res) => {
 
     if (text == '') {
         // This is the first request. Note how we start the response with CON
-        response = `CON What would you like to check
-            1. My account
-            2. My phone number`;
+        response = `CON What would you like to check ?
+            1. My account balance
+            2. My benefits`;
     } else if (text == '1') {
         // Business logic for first level response
-        response = `CON Choose account information you want to view
-            1. Account number`;
+        response = `Please reply with your acccount number`;
     } else if (text == '2') {
         // Business logic for first level response
         // This is a terminal request. Note how we start the response with END
