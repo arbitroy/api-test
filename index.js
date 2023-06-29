@@ -146,12 +146,12 @@ app.post('/ussd', async (req, res) => {
     res.set('Content-Type: text/plain');
     res.send(response);
 });
-const BASEURL = "https://accounts.multitenant.slade360.co.ke/";
+const BASEURL1 = "https://accounts.multitenant.slade360.co.ke/";
 const PROVIDERAPIURL = "https://provider-edi-api.multitenant.slade360.co.ke/v1/beneficiaries/member_eligibility/";
 
 async function Request(endpoint, type, payload, headers) {
   try {
-    const response = await fetch(BASEURL + endpoint, {
+    const response = await fetch(BASEURL1 + endpoint, {
       method: type,
       body: payload,
       headers: headers,
