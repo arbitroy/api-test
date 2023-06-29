@@ -43,7 +43,7 @@ app.post('/ussd', async (req, res) => {
     let response = '';
 
     console.log(`This is ${serviceCode} ${phoneNumber} ${text}`)
-    console.log(`body -> ${req.body.phoneNumber}`)
+    console.log(`body -> ${req.body[0]}`)
     
     if (text === ""){
         response = 'CON we are in !'
