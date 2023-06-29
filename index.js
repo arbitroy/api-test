@@ -1,51 +1,52 @@
+import express from 'express';
+const app = express();
 
-const express = require("express")
+app.get('/', (req, res) => {
+    res.send('Choo Choo! Welcome to your Express app 🚅');
+})
 
+app.get("/json", (req, res) => {
+    res.json({"Choo Choo": "Welcome to your Express app 🚅"});
+})
 
-const main = async ({ port }) => {
-  const app = express()
+app.post('/ussd', (req, res) => {
+    // Read the variables sent via POST from our API
+    const {
+        sessionId,
+        serviceCode,
+        phoneNumber,
+        text,
+    } = req.body;
 
-  app.use(express.json())
-  app.use(express.urlencoded())
+    let response = '';
 
-  app.get('/', (_req, res) => res.send('Welcome to the GPT Doctor'))
+    if (text == '') {
+        // This is the first request. Note how we start the response with CON
+        response = `CON What would you like to check
+        1. My account
+        2. My phone number`;
+    } else if ( text == '1') {
+        // Business logic for first level response
+        response = `CON Choose account information you want to view
+        1. Account number`;
+    } else if ( text == '2') {
+        // Business logic for first level response
+        // This is a terminal request. Note how we start the response with END
+        response = `END Your phone number is ${phoneNumber}`;
+    } else if ( text == '1*1') {
+        // This is a second level response where the user selected 1 in the first instance
+        const accountNumber = 'ACC100101';
+        // This is a terminal request. Note how we start the response with END
+        response = `END Your account number is ${accountNumber}`;
+    }
 
-//   app.post('/ussd', async (req, res) => {
-//     const { text } = req.body
+    // Send the response back to the API
+    res.set('Content-Type: text/plain');
+    res.send(response);
+});
 
-//     let response = ''
+const port = process.env.PORT || 3000;
 
-//     if (text === '') {
-//       response = 'CON Welcome to GPT Doctor.\nPlease note that this is not a real doctor.\nYou are the doctor, we give you the tools to diagnose your patient.\nEnter: \n1. To start a diagnosis\n0. To exit'
-//     } else if (text === '1') {
-//       response = 'CON Please enter the symptom(s) of your patient. Ensure to separate each symptom with a comma (,). For example: headache, fever, cough'
-//     } else if (text === '0') {
-//       response = 'END You have exited the GPT Doctor. Thank you for using our service. Goodbye!'
-//     } else if (text.split('*').length > 1) {
-//       console.log({ text })
-//       const symptoms = text.split('*')
-//       const input = symptoms[symptoms.length - 1].split('#')[0]
-
-//       const outcome = await ask(input)
-      
-//       if (outcome.status === 'success') {
-//         response = `END ${outcome.message}`
-//       } else {
-//         response = 'END Sorry, an error occurred. Please try again.'
-//       }
-//     } else {
-//       response = 'END Invalid input. Please try again.'
-//     };
-
-//     res.set('Content-Type: text/plain')
-//     res.send(response)
-//   })
-
-  app.use('*', (_req, res) => res.status(400).send('Invalid route. Please check your URL and try again.'))
-
-  app.listen(port, () => console.log(`App running on port ${port}`))
-}
-
-main({
-  port: process.env.APP_PORT || 8152
+app.listen(port, () => {
+    console.log(`Example app listening on port ${port}`)
 })
