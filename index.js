@@ -212,7 +212,7 @@ app.post('/slade', async (req, res) => {
     //     Accept: "application/json",
     // })
     // console.log("working", mydata)
-    test = "z2zXuKnQ6SJgUq4DNX0Z2rlIDbXTAT"
+    test = "lPOtLACjOT9KguJNHmox9NsuKgALDM"
     if (memberId && sladeId) {
         try {
             const url = `https://provider-edi-api.multitenant.slade360.co.ke/v1/beneficiaries/member_eligibility/?member_number=${memberId}&payer_slade_code=${sladeId}`;
@@ -253,3 +253,4 @@ const port = process.env.PORT || 3000;
 app.listen(port, () => {
     console.log(`Example app listening on port ${port}`)
 })
+console.log(first)
