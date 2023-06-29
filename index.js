@@ -127,7 +127,7 @@ app.post('/slade', async (req, res) => {
     // })
     // console.log("working", mydata)
     test = "z2zXuKnQ6SJgUq4DNX0Z2rlIDbXTAT"
-    if (memberId && sladeId && test !== undefined) {
+    if (memberId && sladeId) {
         const url = `https://provider-edi-api.multitenant.slade360.co.ke/v1/beneficiaries/member_eligibility/?member_number=${memberId}&payer_slade_code=${sladeId}`;
         
         const headers = {
