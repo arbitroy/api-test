@@ -44,6 +44,8 @@ app.post('/ussd', async (req, res) => {
 
     let response = '';
 
+    console.log(`Testing ${phoneNumber} ${serviceCode}`)
+
     if (text == '') {
         // This is the first request. Note how we start the response with CON
         response = `CON What would you like to check
