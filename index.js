@@ -138,7 +138,7 @@ app.post('/slade', async (req, res) => {
             };
 
             fetch(url, { method: "GET", headers })
-                .then((data => {
+                .then(data => {
                     console.log("api res", data)
                     res.send(200).json({
                         status: "success",
