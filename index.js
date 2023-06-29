@@ -228,6 +228,7 @@ app.post('/slade', async (req, res) => {
 
              res.status(200).json(data.data)
 
+             console.log("resppomse ",data.data)
             // await fetch(url, { method: "GET", headers })
             //     .then(data => {
             //         console.log("api res", data)
