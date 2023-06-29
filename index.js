@@ -35,7 +35,6 @@ app.get("/json", (req, res) => {
 // AT
 app.post('/ussd', async (req, res) => {
     // Read the variables sent via POST from our API
-
     const {
         sessionId,
         serviceCode,
@@ -45,25 +44,60 @@ app.post('/ussd', async (req, res) => {
 
     let response = '';
 
-    console.log(`Testing ${phoneNumber} ${serviceCode}`)
+    console.log(`Testing ${phoneNumber} ${serviceCode}`);
 
-    if (text == '') {
+    if (text === '') {
         // This is the first request. Note how we start the response with CON
-        response = `CON What would you like to check ?
-            1. My account balance
-            2. My benefits`;
-    } else if (text == '1') {
+        response = `CON Welcome to MyInsurance\nSelect an insurance company:\n1. Jubilee Health Insurance Limited\n2. APA Insurance Company\n3. Madison General Insurance Kenya\n4. Britam General Insurance\n5. Minet Insurance Brokers Limited\n6. Savannah Informatics Insurance Scheme\n7. GNRSH Insurance Scheme`;
+    } else if (text === '1') {
         // Business logic for first level response
-        response = `Please reply with your acccount number`;
-    } else if (text == '2') {
+        response = `CON You selected Jubilee Health Insurance Limited (Code: 457)\nPlease reply with your account number:`;
+    } else if (text === '2') {
         // Business logic for first level response
-        // This is a terminal request. Note how we start the response with END
-        response = `END Your phone number is ${phoneNumber}`;
-    } else if (text == '1*1') {
+        response = `CON You selected APA Insurance Company (Code: 2001)\nPlease reply with your account number:`;
+    } else if (text === '3') {
+        // Business logic for first level response
+        response = `CON You selected Madison General Insurance Kenya (Code: 2011)\nPlease reply with your account number:`;
+    } else if (text === '4') {
+        // Business logic for first level response
+        response = `CON You selected Britam General Insurance (Code: 2002)\nPlease reply with your account number:`;
+    } else if (text === '5') {
+        // Business logic for first level response
+        response = `CON You selected Minet Insurance Brokers Limited (Code: 2020)\nPlease reply with your account number:`;
+    } else if (text === '6') {
+        // Business logic for first level response
+        response = `CON You selected Savannah Informatics Insurance Scheme (Code: 2023)\nPlease reply with your account number:`;
+    } else if (text === '7') {
+        // Business logic for first level response
+        response = `CON You selected GNRSH Insurance Scheme (Code: 2022)\nPlease reply with your account number:`;
+    } else if (text.startsWith('1*')) {
         // This is a second level response where the user selected 1 in the first instance
-        const accountNumber = 'ACC100101';
-        // This is a terminal request. Note how we start the response with END
-        response = `END Your account number is ${accountNumber}`;
+        const selectedOption = text.split('*')[1];
+        response = `END You selected option ${selectedOption}. Thank you!`;
+    } else if (text.startsWith('2*')) {
+        // This is a second level response where the user selected 2 in the first instance
+        const selectedOption = text.split('*')[1];
+        response = `END You selected option ${selectedOption}. Thank you!`;
+    } else if (text.startsWith('3*')) {
+        // This is a second level response where the user selected 3 in the first instance
+        const selectedOption = text.split('*')[1];
+        response = `END You selected option ${selectedOption}. Thank you!`;
+    } else if (text.startsWith('4*')) {
+        // This is a second level response where the user selected 4 in the first instance
+        const selectedOption = text.split('*')[1];
+        response = `END You selected option ${selectedOption}. Thank you!`;
+    } else if (text.startsWith('5*')) {
+        // This is a second level response where the user selected 5 in the first instance
+        const selectedOption = text.split('*')[1];
+        response = `END You selected option ${selectedOption}. Thank you!`;
+    } else if (text.startsWith('6*')) {
+        // This is a second level response where the user selected 6 in the first instance
+        const selectedOption = text.split('*')[1];
+        response = `END You selected option ${selectedOption}. Thank you!`;
+    } else if (text.startsWith('7*')) {
+        // This is a second level response where the user selected 7 in the first instance
+        const selectedOption = text.split('*')[1];
+        response = `END You selected option ${selectedOption}. Thank you!`;
     }
 
     // Send the response back to the API
