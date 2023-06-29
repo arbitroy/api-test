@@ -39,7 +39,6 @@ app.get("/json", (req, res) => {
     res.json({ "Choo Choo": "Welcome to your Express app 🚅" });
 })
 
-sendToAPI()
 // AT
 app.post('/ussd', async (req, res) => {
     // Read the variables sent via POST from our API
