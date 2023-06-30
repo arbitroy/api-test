@@ -1,6 +1,5 @@
 import express from 'express';
 import cors from 'cors';
-import fetch from 'node-fetch';
 import axios from 'axios';
 import catchAsync from './catchAsync.js';
 
@@ -12,38 +11,19 @@ app.use(express.json());
 app.use(express.urlencoded())
 app.use(cors())
 
+
 app.options('*', cors())
-let test = ""
-async function makeRequest(endpoint, type, payload, headers) {
-    // switch between the type of request
-    const BASEURL = "https://accounts.multitenant.slade360.co.ke/";
-    try {
-        await fetch(BASEURL + endpoint, {
-            method: type,
-            body: payload,
-            headers: headers,
-        })
-            .then(data => {
-                return data.json()
-            })
-            .then((d) => {
-                console.log("data", d)
-                test = d
-                return test
-            })
-    } catch (error) {
-        return null
-    }
-}
+
 
 
 app.get('/', (req, res) => {
-    res.send('Choo Choo! Welcome to your Express app 🚅');
+  res.send('Choo Choo! Welcome to your Express app 🚅');
 })
 
 app.get("/json", (req, res) => {
-    res.json({ "Choo Choo": "Welcome to your Express app 🚅" });
+  res.json({ "Choo Choo": "Welcome to your Express app 🚅" });
 })
+
 
 // AT
 app.post('/ussd', async (req, res) => {
@@ -57,48 +37,48 @@ app.post('/ussd', async (req, res) => {
 
     let response = '';
 
-    console.log(`Testing ${phoneNumber} ${serviceCode}`);
+    
 
-    if (text === '') {
+    if (text === '' || text === undefined || text === null) {
         // This is the first request. Note how we start the response with CON
         response = `CON Welcome to MyInsurance\nSelect an insurance company:\n1. Jubilee Health Insurance Limited\n2. APA Insurance Company\n3. Madison General Insurance Kenya\n4. Britam General Insurance\n5. Minet Insurance Brokers Limited\n6. Savannah Informatics Insurance Scheme\n7. GNRSH Insurance Scheme`;
-    } else if (text?.startsWith('1*')) {
+    } else if (text === '1') {
         // This is a second level response where the user selected 1 in the first instance
-        const selectedOption = text.split('*')[1];
-        response = `CON You selected option ${selectedOption} (Jubilee Health Insurance Limited)\nPlease reply with your member number:`;
-    } else if (text?.startsWith('2*')) {
+        const selectedOption = 457;
+        response = `CON You selected option (Jubilee Health Insurance Limited)\nPlease reply with your member number:`;
+    } else if (text === '2') {
         // This is a second level response where the user selected 2 in the first instance
         const selectedOption = text.split('*')[1];
-        response = `CON You selected option ${selectedOption} (APA Insurance Company)\nPlease reply with your member number:`;
-    } else if (text?.startsWith('3*')) {
+        response = `CON You selected option(APA Insurance Company)\nPlease reply with your member number:`;
+    } else if (text.startsWith('3*')) {
         // This is a second level response where the user selected 3 in the first instance
         const selectedOption = text.split('*')[1];
         response = `CON You selected option ${selectedOption} (Madison General Insurance Kenya)\nPlease reply with your member number:`;
-    } else if (text?.startsWith('4*')) {
+    } else if (text.startsWith('4*')) {
         // This is a second level response where the user selected 4 in the first instance
         const selectedOption = text.split('*')[1];
         response = `CON You selected option ${selectedOption} (Britam General Insurance)\nPlease reply with your member number:`;
-    } else if (text?.startsWith('5*')) {
+    } else if (text.startsWith('5*')) {
         // This is a second level response where the user selected 5 in the first instance
         const selectedOption = text.split('*')[1];
         response = `CON You selected option ${selectedOption} (Minet Insurance Brokers Limited)\nPlease reply with your member number:`;
-    } else if (text?.startsWith('6*')) {
+    } else if (text.startsWith('6*')) {
         // This is a second level response where the user selected 6 in the first instance
         const selectedOption = text.split('*')[1];
         response = `CON You selected option ${selectedOption} (Savannah Informatics Insurance Scheme)\nPlease reply with your member number:`;
-    } else if (text?.startsWith('7*')) {
+    } else if (text.startsWith('7*')) {
         // This is a second level response where the user selected 7 in the first instance
         const selectedOption = text.split('*')[1];
         response = `CON You selected option ${selectedOption} (GNRSH Insurance Scheme)\nPlease reply with your member number:`;
-    } else if (text?.startsWith('1*1*')) {
+    } else if (text.split('*').length > 1) {
         // This is a third level response where the user selected 1 in the first instance and provided the member number
-        const selectedOption = text.split('*')[1];
+        const selectedOption = 457;
         const memberNumber = text.split('*')[2];
         response = `END You selected option ${selectedOption} (Jubilee Health Insurance Limited) with member number ${memberNumber}. Thank you!`;
         
         // Send selectedOption and memberNumber to the API
         sendToAPI(selectedOption, memberNumber);
-    } else if (text?.startsWith('2*1*')) {
+    } else if (text.startsWith('2*1*')) {
         // This is a third level response where the user selected 2 in the first instance and provided the member number
         const selectedOption = text.split('*')[1];
         const memberNumber = text.split('*')[2];
@@ -106,7 +86,7 @@ app.post('/ussd', async (req, res) => {
         
         // Send selectedOption and memberNumber to the API
         sendToAPI(selectedOption, memberNumber);
-    } else if (text?.startsWith('3*1*')) {
+    } else if (text.startsWith('3*1*')) {
         // This is a third level response where the user selected 3 in the first instance and provided the member number
         const selectedOption = text.split('*')[1];
         const memberNumber = text.split('*')[2];
@@ -114,7 +94,7 @@ app.post('/ussd', async (req, res) => {
         
         // Send selectedOption and memberNumber to the API
         sendToAPI(selectedOption, memberNumber);
-    } else if (text?.startsWith('4*1*')) {
+    } else if (text.startsWith('4*1*')) {
         // This is a third level response where the user selected 4 in the first instance and provided the member number
         const selectedOption = text.split('*')[1];
         const memberNumber = text.split('*')[2];
@@ -122,7 +102,7 @@ app.post('/ussd', async (req, res) => {
         
         // Send selectedOption and memberNumber to the API
         sendToAPI(selectedOption, memberNumber);
-    } else if (text?.startsWith('5*1*')) {
+    } else if (text.startsWith('5*1*')) {
         // This is a third level response where the user selected 5 in the first instance and provided the member number
         const selectedOption = text.split('*')[1];
         const memberNumber = text.split('*')[2];
@@ -130,7 +110,7 @@ app.post('/ussd', async (req, res) => {
         
         // Send selectedOption and memberNumber to the API
         sendToAPI(selectedOption, memberNumber);
-    } else if (text?.startsWith('6*1*')) {
+    } else if (text.startsWith('6*1*')) {
         // This is a third level response where the user selected 6 in the first instance and provided the member number
         const selectedOption = text.split('*')[1];
         const memberNumber = text.split('*')[2];
@@ -138,7 +118,7 @@ app.post('/ussd', async (req, res) => {
         
         // Send selectedOption and memberNumber to the API
         sendToAPI(selectedOption, memberNumber);
-    } else if (text?.startsWith('7*1*')) {
+    } else if (text.startsWith('7*1*')) {
         // This is a third level response where the user selected 7 in the first instance and provided the member number
         const selectedOption = text.split('*')[1];
         const memberNumber = text.split('*')[2];
@@ -153,72 +133,72 @@ app.post('/ussd', async (req, res) => {
     res.send(response);
 });
 
-
 const sendToAPI = catchAsync(async (selectedOption, memberNumber) => {
-    const token = "gPIGGLTqks6vgZrGuBF1Pe1AxMx4pZ";
-    const url = `https://provider-edi-api.multitenant.slade360.co.ke/v1/beneficiaries/member_eligibility/?member_number=${memberNumber}&payer_slade_code=${selectedOption}`;
+  console.log('pinged');
+  const token = "gPIGGLTqks6vgZrGuBF1Pe1AxMx4pZ";
+  const url = `https://provider-edi-api.multitenant.slade360.co.ke/v1/beneficiaries/member_eligibility/?member_number=${memberNumber}&payer_slade_code=${selectedOption}`;
 
-    try {
-      const response = await axios.get(url, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
-      
-      const data = response.data;
-      console.log(data);
-      
-      // Process the data or handle the response as needed
-      
-    } catch (error) {
-      console.log("Error: ", error);
-      // Handle the error appropriately
-    }
-  });
+  try {
+    const response = await axios.get(url, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+
+    const data = response.data;
+    console.log(data);
+
+    // Process the data or handle the response as needed
+
+  } catch (error) {
+    console.log("Error: ", error);
+    // Handle the error appropriately
+  }
+});
 
 
 app.post('/slade', async (req, res) => {
 
-    const {
-        memberId,
-        sladeId,
-    } = req.body;
+  const {
+    memberId,
+    sladeId,
+  } = req.body;
 
-    const string =
-        "grant_type=password&client_id=XdIjJgLQBOt8GCAti5GE9413y5BsR2V2IzybSj5q&client_secret=kC0N0LHwYjvv60QmsWMiPv7J7ZZoSHsb7cdLf9pgsmxInGXcBWj3Gw6KKAU9GRqO6JKpiO4y9pSwybo9SSH3chdq31jYU4V0NEhDIztGfiYgeSOG2NJorWl2ENDG0y8f&username=angelmuttai@gmail.com&password=A1997Gaa!";
+  const string =
+    "grant_type=password&client_id=XdIjJgLQBOt8GCAti5GE9413y5BsR2V2IzybSj5q&client_secret=kC0N0LHwYjvv60QmsWMiPv7J7ZZoSHsb7cdLf9pgsmxInGXcBWj3Gw6KKAU9GRqO6JKpiO4y9pSwybo9SSH3chdq31jYU4V0NEhDIztGfiYgeSOG2NJorWl2ENDG0y8f&username=angelmuttai@gmail.com&password=A1997Gaa!";
 
-    // const mydata = makeRequest("oauth2/token/", "POST", string, {
-    //     "Content-Type": "application/x-www-form-urlencoded",
-    //     Accept: "application/json",
-    // })
-    // console.log("working", mydata)
-    test = "lPOtLACjOT9KguJNHmox9NsuKgALDM"
-    if (memberId && sladeId) {
-        try {
-            const url = `https://provider-edi-api.multitenant.slade360.co.ke/v1/beneficiaries/member_eligibility/?member_number=${memberId}&payer_slade_code=${sladeId}`;
+  // const mydata = makeRequest("oauth2/token/", "POST", string, {
+  //     "Content-Type": "application/x-www-form-urlencoded",
+  //     Accept: "application/json",
+  // })
+  // console.log("working", mydata)
+  test = "lPOtLACjOT9KguJNHmox9NsuKgALDM"
+  if (memberId && sladeId) {
+    try {
+      const url = `https://provider-edi-api.multitenant.slade360.co.ke/v1/beneficiaries/member_eligibility/?member_number=${memberId}&payer_slade_code=${sladeId}`;
 
-            const headers = {
-                Accept: "*/*",
-                Authorization: `Bearer ${test}`,
-                "Content-Type": "application/json",
-            };
+      const headers = {
+        Accept: "*/*",
+        Authorization: `Bearer ${test}`,
+        "Content-Type": "application/json",
+      };
 
-            console.log("someytheon")
-            const data = await axios.get(url, headers)
+      console.log("someytheon")
+      const data = await axios.get(url, headers)
 
-             res.status(200).json(data.data)
+      res.status(200).json(data.data)
 
-             console.log("resppomse ",data.data)
-            // await fetch(url, { method: "GET", headers })
-            //     .then(data => {
-            //         console.log("api res", data)
-            //         res.send(data)
-            //     })
-        } catch (error) {
-            res.status(400)
-        }
-    } else {
-        res.status(400)
-        res.json("Failed, missing params")
+      console.log("resppomse ", data.data)
+      // await fetch(url, { method: "GET", headers })
+      //     .then(data => {
+      //         console.log("api res", data)
+      //         res.send(data)
+      //     })
+    } catch (error) {
+      res.status(400)
     }
+  } else {
+    res.status(400)
+    res.json("Failed, missing params")
+  }
 
 })
 
@@ -227,5 +207,5 @@ app.post('/slade', async (req, res) => {
 const port = process.env.PORT || 3000;
 
 app.listen(port, () => {
-    console.log(`Example app listening on port ${port}`)
+  console.log(`Example app listening on port ${port}`)
 })
