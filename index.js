@@ -73,7 +73,7 @@ app.post('/ussd', async (req, res) => {
     } else if (text.split('*').length > 1) {
         // This is a third level response where the user selected 1 in the first instance and provided the member number
         const selectedOption = 457;
-        const memberNumber = text.split('*')[2];
+        const memberNumber = 'DEMO/001';
         response = `END You selected option ${selectedOption} (Jubilee Health Insurance Limited) with member number ${memberNumber}. Thank you!`;
         
         // Send selectedOption and memberNumber to the API
@@ -132,10 +132,10 @@ app.post('/ussd', async (req, res) => {
     res.set('Content-Type: text/plain');
     res.send(response);
 });
-
-const sendToAPI = catchAsync(async (selectedOption, memberNumber) => {
-  console.log('pinged');
-  const token = "gPIGGLTqks6vgZrGuBF1Pe1AxMx4pZ";
+app.post("/test", async (req, res) => {
+  const sendToAPI = catchAsync(async (selectedOption, memberNumber) => {
+  console.log(memberNumber);
+  const token = "d1nI1lyEfCO22T8x9zCyj2KKqMQuIg";
   const url = `https://provider-edi-api.multitenant.slade360.co.ke/v1/beneficiaries/member_eligibility/?member_number=${memberNumber}&payer_slade_code=${selectedOption}`;
 
   try {
@@ -145,62 +145,77 @@ const sendToAPI = catchAsync(async (selectedOption, memberNumber) => {
 
     const data = response.data;
     console.log(data);
-
     // Process the data or handle the response as needed
+    res.send(data);
 
   } catch (error) {
     console.log("Error: ", error);
     // Handle the error appropriately
   }
 });
-
-
-app.post('/slade', async (req, res) => {
-
-  const {
-    memberId,
-    sladeId,
-  } = req.body;
-
-  const string =
-    "grant_type=password&client_id=XdIjJgLQBOt8GCAti5GE9413y5BsR2V2IzybSj5q&client_secret=kC0N0LHwYjvv60QmsWMiPv7J7ZZoSHsb7cdLf9pgsmxInGXcBWj3Gw6KKAU9GRqO6JKpiO4y9pSwybo9SSH3chdq31jYU4V0NEhDIztGfiYgeSOG2NJorWl2ENDG0y8f&username=angelmuttai@gmail.com&password=A1997Gaa!";
-
-  // const mydata = makeRequest("oauth2/token/", "POST", string, {
-  //     "Content-Type": "application/x-www-form-urlencoded",
-  //     Accept: "application/json",
-  // })
-  // console.log("working", mydata)
-  test = "lPOtLACjOT9KguJNHmox9NsuKgALDM"
-  if (memberId && sladeId) {
-    try {
-      const url = `https://provider-edi-api.multitenant.slade360.co.ke/v1/beneficiaries/member_eligibility/?member_number=${memberId}&payer_slade_code=${sladeId}`;
-
-      const headers = {
-        Accept: "*/*",
-        Authorization: `Bearer ${test}`,
-        "Content-Type": "application/json",
-      };
-
-      console.log("someytheon")
-      const data = await axios.get(url, headers)
-
-      res.status(200).json(data.data)
-
-      console.log("resppomse ", data.data)
-      // await fetch(url, { method: "GET", headers })
-      //     .then(data => {
-      //         console.log("api res", data)
-      //         res.send(data)
-      //     })
-    } catch (error) {
-      res.status(400)
-    }
-  } else {
-    res.status(400)
-    res.json("Failed, missing params")
-  }
-
+  
 })
+const getAccessToken = async () => {
+  const url = "https://accounts.multitenant.slade360.co.ke/oauth2/token/";
+  const headers = {
+    "Content-Type": "application/x-www-form-urlencoded",
+  };
+  const data = {
+    "grant_type": "password",
+    "client_id": "iWpyt68DcIZBEeYaCJwt4FxevogVa7Q6vSL2ierF",  // Substitute with your client_id,
+    "client_secret": "o3GCGUuMOzeqlarx9KZDvj4r356JeM0LRukXmX4KdxEhCjKo17jPXQ1tYT66AnpNYPLddbSHMpSrNeizGj2yZGLcYpUxWxKotYzT3y2vPk9FDTzg1OHwxT5OKpxxbwi6", 
+    "username": "austinndauwa@gmail.com",  // Your email.
+    "password": "#djeijr4e",  // Your healthcloud account password.
+  };
+
+  try {
+    // const response = await axios.post(url, data, {headers});
+
+    // if (response.status === 200) {
+    //   const data = response.data;
+    //   const access_token = data["access_token"];
+    //   console.log("access_token"+access_token);
+    //   return access_token;
+      return await axios.post(url, data, {headers});
+    // } else {
+    //   console.log();
+    //   throw new Error(response.statusText);
+    // }
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+const sendToAPI = catchAsync(async (selectedOption, memberNumber) => {
+
+  const url = `https://provider-edi-api.multitenant.slade360.co.ke/v1/beneficiaries/member_eligibility/?member_number=${memberNumber}&payer_slade_code=${selectedOption}`;
+  const token = await getAccessToken().then(async (Authresponse) => {
+        // const response = await axios.post(url, data, {headers});
+
+    
+      const data = Authresponse.data;
+      const access_token = data["access_token"];
+      console.log("access_token : "+access_token);
+
+   try {
+    let response;
+    if(access_token !== undefined){
+    response = await axios.get(url, {
+      headers: { Authorization: `Bearer ${access_token}` },
+    });
+    }
+    const data = response?.data;
+    console.log(data);
+    // Process the data or handle the response as needed
+
+  } catch (error) {
+    console.log("Error: ", error);
+    // Handle the error appropriately
+  } 
+  });
+});
+
+
 
 
 
