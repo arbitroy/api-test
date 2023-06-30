@@ -62,35 +62,35 @@ app.post('/ussd', async (req, res) => {
     if (text === '') {
         // This is the first request. Note how we start the response with CON
         response = `CON Welcome to MyInsurance\nSelect an insurance company:\n1. Jubilee Health Insurance Limited\n2. APA Insurance Company\n3. Madison General Insurance Kenya\n4. Britam General Insurance\n5. Minet Insurance Brokers Limited\n6. Savannah Informatics Insurance Scheme\n7. GNRSH Insurance Scheme`;
-    } else if (text.startsWith('1*')) {
+    } else if (text?.startsWith('1*')) {
         // This is a second level response where the user selected 1 in the first instance
         const selectedOption = text.split('*')[1];
         response = `CON You selected option ${selectedOption} (Jubilee Health Insurance Limited)\nPlease reply with your member number:`;
-    } else if (text.startsWith('2*')) {
+    } else if (text?.startsWith('2*')) {
         // This is a second level response where the user selected 2 in the first instance
         const selectedOption = text.split('*')[1];
         response = `CON You selected option ${selectedOption} (APA Insurance Company)\nPlease reply with your member number:`;
-    } else if (text.startsWith('3*')) {
+    } else if (text?.startsWith('3*')) {
         // This is a second level response where the user selected 3 in the first instance
         const selectedOption = text.split('*')[1];
         response = `CON You selected option ${selectedOption} (Madison General Insurance Kenya)\nPlease reply with your member number:`;
-    } else if (text.startsWith('4*')) {
+    } else if (text?.startsWith('4*')) {
         // This is a second level response where the user selected 4 in the first instance
         const selectedOption = text.split('*')[1];
         response = `CON You selected option ${selectedOption} (Britam General Insurance)\nPlease reply with your member number:`;
-    } else if (text.startsWith('5*')) {
+    } else if (text?.startsWith('5*')) {
         // This is a second level response where the user selected 5 in the first instance
         const selectedOption = text.split('*')[1];
         response = `CON You selected option ${selectedOption} (Minet Insurance Brokers Limited)\nPlease reply with your member number:`;
-    } else if (text.startsWith('6*')) {
+    } else if (text?.startsWith('6*')) {
         // This is a second level response where the user selected 6 in the first instance
         const selectedOption = text.split('*')[1];
         response = `CON You selected option ${selectedOption} (Savannah Informatics Insurance Scheme)\nPlease reply with your member number:`;
-    } else if (text.startsWith('7*')) {
+    } else if (text?.startsWith('7*')) {
         // This is a second level response where the user selected 7 in the first instance
         const selectedOption = text.split('*')[1];
         response = `CON You selected option ${selectedOption} (GNRSH Insurance Scheme)\nPlease reply with your member number:`;
-    } else if (text.startsWith('1*1*')) {
+    } else if (text?.startsWith('1*1*')) {
         // This is a third level response where the user selected 1 in the first instance and provided the member number
         const selectedOption = text.split('*')[1];
         const memberNumber = text.split('*')[2];
@@ -98,7 +98,7 @@ app.post('/ussd', async (req, res) => {
         
         // Send selectedOption and memberNumber to the API
         sendToAPI(selectedOption, memberNumber);
-    } else if (text.startsWith('2*1*')) {
+    } else if (text?.startsWith('2*1*')) {
         // This is a third level response where the user selected 2 in the first instance and provided the member number
         const selectedOption = text.split('*')[1];
         const memberNumber = text.split('*')[2];
@@ -106,7 +106,7 @@ app.post('/ussd', async (req, res) => {
         
         // Send selectedOption and memberNumber to the API
         sendToAPI(selectedOption, memberNumber);
-    } else if (text.startsWith('3*1*')) {
+    } else if (text?.startsWith('3*1*')) {
         // This is a third level response where the user selected 3 in the first instance and provided the member number
         const selectedOption = text.split('*')[1];
         const memberNumber = text.split('*')[2];
@@ -114,7 +114,7 @@ app.post('/ussd', async (req, res) => {
         
         // Send selectedOption and memberNumber to the API
         sendToAPI(selectedOption, memberNumber);
-    } else if (text.startsWith('4*1*')) {
+    } else if (text?.startsWith('4*1*')) {
         // This is a third level response where the user selected 4 in the first instance and provided the member number
         const selectedOption = text.split('*')[1];
         const memberNumber = text.split('*')[2];
@@ -122,7 +122,7 @@ app.post('/ussd', async (req, res) => {
         
         // Send selectedOption and memberNumber to the API
         sendToAPI(selectedOption, memberNumber);
-    } else if (text.startsWith('5*1*')) {
+    } else if (text?.startsWith('5*1*')) {
         // This is a third level response where the user selected 5 in the first instance and provided the member number
         const selectedOption = text.split('*')[1];
         const memberNumber = text.split('*')[2];
@@ -130,7 +130,7 @@ app.post('/ussd', async (req, res) => {
         
         // Send selectedOption and memberNumber to the API
         sendToAPI(selectedOption, memberNumber);
-    } else if (text.startsWith('6*1*')) {
+    } else if (text?.startsWith('6*1*')) {
         // This is a third level response where the user selected 6 in the first instance and provided the member number
         const selectedOption = text.split('*')[1];
         const memberNumber = text.split('*')[2];
@@ -138,7 +138,7 @@ app.post('/ussd', async (req, res) => {
         
         // Send selectedOption and memberNumber to the API
         sendToAPI(selectedOption, memberNumber);
-    } else if (text.startsWith('7*1*')) {
+    } else if (text?.startsWith('7*1*')) {
         // This is a third level response where the user selected 7 in the first instance and provided the member number
         const selectedOption = text.split('*')[1];
         const memberNumber = text.split('*')[2];
